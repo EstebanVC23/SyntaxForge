@@ -10,14 +10,16 @@ import { tokenize } from "../logic/utils/tokenizer.js";
 import { validateTokens } from "../logic/grammar/validateTokens.js";
 import { validateVocabulary } from "../logic/utils/vocabularyValidator.js";
 
+import "../styles/GamePage.css";
+
 export default function GamePage() {
   const { fragment, currentText, setCurrentText, feedback, setFeedback, nextRound, round, score, setScore } = useContext(GameContext);
   const { bank, refreshBank, resetWordPoints } = useContext(WordBankContext);
-  const [showTree, setShowTree] = useState(false); // <--- Estado para mostrar/ocultar árbol
+  const [showTree, setShowTree] = useState(false);
 
   function handleValidate() {
     setFeedback(null);
-    setShowTree(false); // ocultar el árbol al validar nuevamente
+    setShowTree(false);
 
     const userInput = currentText.trim();
     if (!userInput) {
@@ -78,30 +80,26 @@ export default function GamePage() {
   }
 
   return (
-    <div className="container">
+    <div className="container game-page">
       <h1>🎯 GDC Game — Modo Construcción</h1>
       
-      <div style={{ display: 'flex', gap: 20, marginBottom: 20, justifyContent: 'space-between', flexWrap: 'wrap' }}>
+      <div className="score-container">
         <div className="score-display">
           <span>🏆 Ronda:</span>
-          <span style={{ fontSize: '1.2rem' }}>{round}</span>
+          <span>{round}</span>
         </div>
         <div className="score-display">
           <span>⭐ Puntuación:</span>
-          <span style={{ fontSize: '1.2rem' }}>{score}</span>
+          <span>{score}</span>
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
-        <div style={{ flex: '1 1 500px', minWidth: 0 }}>
+      <div className="main-content">
+        <div className="game-area">
           <div className="objective-box">
-            <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#4c1d95', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-              🎯 Tu objetivo:
-            </div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#5b21b6', padding: '12px 16px', background: 'white', borderRadius: '10px', marginBottom: 12, boxShadow: '0 2px 8px rgba(102, 126, 234, 0.15)' }}>
-              {fragment}
-            </div>
-            <div style={{ fontSize: '0.9rem', color: '#6b7280', fontStyle: 'italic', lineHeight: '1.6' }}>
+            <div className="objective-title">🎯 Tu objetivo:</div>
+            <div className="objective-fragment">{fragment}</div>
+            <div className="objective-description">
               💡 Debes incluir esta estructura en tu oración y agregar más contenido.
               Solo puedes usar palabras del banco de palabras.
             </div>
@@ -109,19 +107,19 @@ export default function GamePage() {
           
           <SentenceInput onValidate={handleValidate} />
 
-          <div style={{ marginTop: 16, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <div className="action-buttons">
             <button onClick={handleNextRound}>⏭️ Siguiente intento</button>
             <button 
               onClick={handleClearText}
               disabled={feedback && feedback.valid}
-              style={{ background: feedback && feedback.valid ? '#9ca3af' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' }}
+              className={feedback && feedback.valid ? "disabled-btn" : ""}
             >
               🗑️ Borrar texto
             </button>
             {feedback?.valid && currentText.trim() && (
               <button
                 onClick={() => setShowTree(prev => !prev)}
-                style={{ background: '#4f46e5', color: 'white' }}
+                className="tree-btn"
               >
                 {showTree ? 'Ocultar árbol' : 'Mostrar árbol sintáctico'}
               </button>
@@ -130,8 +128,8 @@ export default function GamePage() {
 
           <FeedbackBox result={feedback} />
 
-          {feedback?.usedWords && feedback.usedWords.length > 0 && (
-            <div style={{ marginTop: 12, padding: '12px 16px', background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)', borderRadius: '10px', fontSize: '0.95rem', color: '#78350f', boxShadow: '0 2px 8px rgba(251, 191, 36, 0.2)' }}>
+          {feedback?.usedWords?.length > 0 && (
+            <div className="used-words">
               <strong>💼 Palabras del banco usadas:</strong> {feedback.usedWords.join(", ")}
             </div>
           )}
@@ -139,7 +137,7 @@ export default function GamePage() {
           {showTree && <SyntaxTreeViewer text={currentText} />}
         </div>
 
-        <div style={{ flex: '0 1 350px', minWidth: 280 }}>
+        <div className="bank-area">
           <WordBank />
         </div>
       </div>

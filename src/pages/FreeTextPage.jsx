@@ -1,22 +1,24 @@
 import React, { useContext, useState } from "react";
+import { GameContext } from "../context/GameContext.jsx";
+import { WordBankContext } from "../context/WordBankContext.jsx";
 import { splitIntoSentences } from "../logic/utils/splitIntoSentences.js";
 import { tokenize } from "../logic/utils/tokenizer.js";
 import { validateTokens } from "../logic/grammar/validateTokens.js";
 import { validateVocabulary } from "../logic/utils/vocabularyValidator.js";
 import FeedbackBox from "../components/FeedbackBox.jsx";
 import WordBank from "../components/WordBank.jsx";
-import { WordBankContext } from "../context/WordBankContext.jsx";
 import SyntaxTreeViewer from "../components/SyntaxTreeViewer.jsx";
 
 export default function FreeTextPage() {
   const { bank } = useContext(WordBankContext);
+  const { score, setScore } = useContext(GameContext); // puntuación global
   const [text, setText] = useState('');
   const [report, setReport] = useState(null);
-  const [showTree, setShowTree] = useState(false); // <--- Estado para mostrar/ocultar árbol
+  const [showTree, setShowTree] = useState(false);
 
   function handleValidate() {
     setReport(null);
-    setShowTree(false); // ocultar el árbol al validar nuevamente
+    setShowTree(false);
 
     const sentences = splitIntoSentences(text);
 
@@ -76,10 +78,13 @@ export default function FreeTextPage() {
       });
     }
 
+    // Actualizar puntuación global compartida
+    setScore(prev => prev + totalScore);
+
     setReport({
       valid: overallValid,
       details: fullReport,
-      score: totalScore
+      score: score + totalScore
     });
   }
 
@@ -92,6 +97,20 @@ export default function FreeTextPage() {
   return (
     <div className="container">
       <h1>📝 Modo Texto Libre — Valida párrafos</h1>
+
+      {/* Mostrar puntuación global */}
+      <div style={{
+        marginBottom: 20,
+        padding: '12px 16px',
+        borderRadius: 12,
+        background: 'linear-gradient(135deg, #fef9c3 0%, #facc15 100%)',
+        color: '#78350f',
+        fontWeight: 'bold',
+        fontSize: '1.1rem',
+        display: 'inline-block'
+      }}>
+        ⭐ Puntuación acumulada: {score}
+      </div>
 
       <div style={{ 
         padding: '16px 20px',
@@ -137,7 +156,6 @@ export default function FreeTextPage() {
             🗑️ Limpiar
           </button>
 
-          {/* Botón para mostrar/ocultar árbol */}
           {report && report.valid && text.trim() && (
             <button
               onClick={() => setShowTree(prev => !prev)}
@@ -184,7 +202,7 @@ export default function FreeTextPage() {
               {report.valid ? 'Todo correcto' : 'Se encontraron errores'}
             </div>
             <div style={{ fontSize: '0.95rem' }}>
-              <strong>⭐ Puntuación total:</strong> {report.score}
+              <strong>⭐ Puntuación total de este intento:</strong> {report.score}
               <br />
               <strong>📝 Oraciones válidas:</strong> {report.details.filter(d => d.result.valid).length} / {report.details.length}
             </div>
@@ -219,7 +237,6 @@ export default function FreeTextPage() {
             ))}
           </div>
 
-          {/* Mostrar árbol solo si showTree es true */}
           {showTree && <SyntaxTreeViewer text={text} />}
         </div>
       )}

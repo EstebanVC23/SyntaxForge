@@ -1,17 +1,15 @@
-import React from "react";
-import { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { GameContext } from "../context/GameContext.jsx";
+import "../styles/SentenceInput.css";
 
 export default function SentenceInput({ onValidate }) {
   const { currentText, setCurrentText, feedback } = useContext(GameContext);
   const textareaRef = useRef();
-
   const isLocked = feedback && feedback.valid;
 
   useEffect(() => {
     function handler(e) {
       if (isLocked) return;
-      
       const word = e.detail;
       setCurrentText(prev => (prev ? prev + ' ' + word : word));
       textareaRef.current?.focus();
@@ -27,15 +25,8 @@ export default function SentenceInput({ onValidate }) {
 
   return (
     <div className="sentence-card">
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        marginBottom: 12,
-        color: '#4c1d95',
-        fontWeight: 600
-      }}>
-        <span style={{ fontSize: '1.2rem' }}>✍️</span>
+      <div className="sentence-label">
+        <span>✍️</span>
         <span>Escribe tu oración:</span>
       </div>
       
@@ -49,24 +40,14 @@ export default function SentenceInput({ onValidate }) {
           : "Incluye la estructura objetivo en tu oración..."
         }
         rows={5}
-        style={{ 
-          background: isLocked ? '#d1fae5' : 'white',
-          cursor: isLocked ? 'not-allowed' : 'text',
-          border: isLocked ? '2px solid #10b981' : '2px solid #e0e7ff'
-        }}
+        className={isLocked ? "locked" : ""}
         disabled={isLocked}
       />
 
-      <div style={{ marginTop: 12 }}>
+      <div className="sentence-button">
         <button 
           onClick={onValidate}
           disabled={!currentText.trim() || isLocked}
-          style={{
-            width: '100%',
-            padding: '14px',
-            fontSize: '1.05rem',
-            fontWeight: 'bold'
-          }}
         >
           {isLocked ? '✅ Validado correctamente' : '🚀 Validar mi oración'}
         </button>

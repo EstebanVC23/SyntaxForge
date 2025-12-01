@@ -1,0 +1,85 @@
+.game-page .score-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.game-page .score-display span:last-child {
+  font-size: 1.2rem;
+}
+
+.game-page .main-content {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.game-page .game-area {
+  flex: 1 1 500px;
+  min-width: 0;
+}
+
+.game-page .bank-area {
+  flex: 0 1 350px;
+  min-width: 280px;
+}
+
+.game-page .objective-box {
+  margin-bottom: 16px;
+}
+
+.game-page .objective-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #4c1d95;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-page .objective-fragment {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #5b21b6;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.game-page .objective-description {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.game-page .action-buttons {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.game-page .tree-btn {
+  background: #4f46e5;
+  color: white;
+}
+
+.game-page .disabled-btn {
+  background: #9ca3af !important;
+}
+
+.game-page .used-words {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #78350f;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.2);
+}

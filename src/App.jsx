@@ -1,60 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { GameProvider } from "./context/GameContext.jsx";
 import { WordBankProvider, WordBankContext } from "./context/WordBankContext.jsx";
+
 import GamePage from "./pages/GamePage.jsx";
 import FreeTextPage from "./pages/FreeTextPage.jsx";
+import TheoryPage from "./pages/TheoryPage.jsx";
 import DictionaryDropdown from "./components/DictionaryDropdown.jsx";
 
+import "./styles/App.css"; // Importamos el CSS
+
 export default function App() {
-  const [route, setRoute] = React.useState("game");
-  const [gameModeOpen, setGameModeOpen] = React.useState(false);
+  const [route, setRoute] = useState("game"); // ruta inicial
+  const [gameModeOpen, setGameModeOpen] = useState(false);
+
+  const handleRouteChange = (newRoute) => {
+    console.log("Cambiando ruta a:", newRoute);
+    setRoute(newRoute);
+    setGameModeOpen(false);
+  };
 
   return (
     <WordBankProvider>
       <GameProvider>
-        <div style={{ padding: 20, minHeight: '100vh' }}>
-          <header style={{ 
-            display: "flex", 
-            gap: 12, 
-            marginBottom: 20,
-            justifyContent: "center",
-            flexWrap: "wrap"
-          }}>
-            {/* Modo de juego */}
-            <div style={{ position: "relative" }}>
-              <button 
+        <div className="app-container">
+          <header className="app-header">
+            {/* Dropdown Modo de Juego */}
+            <div className="dropdown-container">
+              <button
+                className="dropdown-button"
                 onClick={() => setGameModeOpen(!gameModeOpen)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8
-                }}
               >
                 🎮 Modo de Juego
               </button>
+
               {gameModeOpen && (
-                <div className="dropdown-menu" style={{ minWidth: 200 }}>
-                  <button 
-                    style={{ 
-                      display: "block", 
-                      width: "100%", 
-                      margin: "4px 0",
-                      background: route === "game" ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "#f3f4f6",
-                      color: route === "game" ? "white" : "#374151"
-                    }}
-                    onClick={() => { setRoute("game"); setGameModeOpen(false); }}
+                <div className="dropdown-menu">
+                  <button
+                    className={`menu-item ${route === "game" ? "active" : ""}`}
+                    onClick={() => handleRouteChange("game")}
                   >
                     🏗️ Modo Construcción
                   </button>
-                  <button 
-                    style={{ 
-                      display: "block", 
-                      width: "100%", 
-                      margin: "4px 0",
-                      background: route === "free" ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "#f3f4f6",
-                      color: route === "free" ? "white" : "#374151"
-                    }}
-                    onClick={() => { setRoute("free"); setGameModeOpen(false); }}
+
+                  <button
+                    className={`menu-item ${route === "free" ? "active" : ""}`}
+                    onClick={() => handleRouteChange("free")}
                   >
                     📝 Modo Texto Libre
                   </button>
@@ -62,15 +52,25 @@ export default function App() {
               )}
             </div>
 
-            {/* Diccionario desplegable */}
+            {/* Botón Teoría GDC */}
+            <button
+              className={`theory-button ${route === "theory" ? "active" : ""}`}
+              onClick={() => handleRouteChange("theory")}
+            >
+              📚 Teoría GDC
+            </button>
+
+            {/* Diccionario */}
             <WordBankContext.Consumer>
               {({ addToInput }) => <DictionaryDropdown addWord={addToInput} />}
             </WordBankContext.Consumer>
           </header>
 
-          {/* Render según ruta */}
-          {route === "game" && <GamePage />}
-          {route === "free" && <FreeTextPage />}
+          <main>
+            {route === "game" && <GamePage />}
+            {route === "free" && <FreeTextPage />}
+            {route === "theory" && <TheoryPage />}
+          </main>
         </div>
       </GameProvider>
     </WordBankProvider>

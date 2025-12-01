@@ -1,0 +1,73 @@
+/* Contenedor principal */
+.app-container {
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Dropdown */
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #e0e7ff;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  z-index: 10;
+}
+
+.menu-item {
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+  background: #e0e7ff;
+  color: #1e293b;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.menu-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Botón Teoría GDC */
+.theory-button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #e0e7ff;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.theory-button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
