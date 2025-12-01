@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ALL_WORDS } from "../data/wordLists.js";
-import "../styles/DictionaryDropdown.css";
+import "./DictionaryDropdown.css";
 
 // Componente desplegable para seleccionar palabras desde un diccionario predefinido
 export default function DictionaryDropdown({ addWord }) {
