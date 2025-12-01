@@ -1,25 +1,26 @@
 // src/data/wordLists.js
 
+// Lista de artículos definidos, indefinidos y contracciones
 export const ARTICLES = [
-  // Artículos definidos
+  // Artículos definidos (the)
   { word: "el", gender: "m", plural: false },
   { word: "la", gender: "f", plural: false },
   { word: "los", gender: "m", plural: true },
   { word: "las", gender: "f", plural: true },
   { word: "lo", gender: "n", plural: false }, // neutro
 
-  // Artículos indefinidos
+  // Artículos indefinidos (a/an/some)
   { word: "un", gender: "m", plural: false },
   { word: "una", gender: "f", plural: false },
   { word: "unos", gender: "m", plural: true },
   { word: "unas", gender: "f", plural: true },
 
-  // Contracciones
+  // Contracciones comunes
   { word: "al", gender: "m", plural: false }, // a + el
   { word: "del", gender: "m", plural: false } // de + el
 ];
 
-
+// Lista de sustantivos con características gramaticales y semánticas
 export const NOUNS = [
   // ======================
   // Personas y profesiones
@@ -217,13 +218,13 @@ export const NOUNS = [
   { word: "historia", gender: "f", features: ["+abstract"] }
 ];
 
-
+// Datos de verbos con información de tipo y restricciones de selección
 export const VERBS_DATA = [
-  // Copulativos
+  // Copulativos (be/estar)
   { word: "es", type: "b", restrictions: {} },
   { word: "está", type: "b", restrictions: {} },
   
-  // Intransitivos
+  // Intransitivos (sin objeto directo)
   { word: "corre", type: "i", restrictions: { subj: ["+animate"] } },
   { word: "salta", type: "i", restrictions: { subj: ["+animate"] } },
   { word: "camina", type: "i", restrictions: { subj: ["+animate"] } },
@@ -236,7 +237,7 @@ export const VERBS_DATA = [
   { word: "existe", type: "i", restrictions: {} },
   { word: "brilla", type: "i", restrictions: {} },
   
-  // Transitivos generales
+  // Transitivos generales (con objeto directo)
   { word: "come", type: "t", restrictions: { subj: ["+animate"] } },
   { word: "bebe", type: "t", restrictions: { subj: ["+animate"] } },
   { word: "mira", type: "t", restrictions: { subj: ["+animate"] } },
@@ -251,7 +252,7 @@ export const VERBS_DATA = [
   { word: "toca", type: "t", restrictions: { subj: ["+animate"] } },
   { word: "agarra", type: "t", restrictions: { subj: ["+animate"] } },
   
-  // Transitivos cognitivos
+  // Transitivos cognitivos (verbos de pensamiento)
   { word: "piensa", type: "t", restrictions: { subj: ["+human"], obj: ["+abstract"] } },
   { word: "sabe", type: "t", restrictions: { subj: ["+human"], obj: ["+abstract"] } },
   { word: "entiende", type: "t", restrictions: { subj: ["+human"], obj: ["+abstract"] } },
@@ -265,7 +266,7 @@ export const VERBS_DATA = [
   { word: "recuerda", type: "t", restrictions: { subj: ["+human"], obj: ["+abstract"] } },
   { word: "olvida", type: "t", restrictions: { subj: ["+human"], obj: ["+abstract"] } },
   
-  // Transitivos comunicativos
+  // Transitivos comunicativos (verbos de comunicación)
   { word: "dice", type: "t", restrictions: { subj: ["+human"] } },
   { word: "habla", type: "t", restrictions: { subj: ["+human"] } },
   { word: "escribe", type: "t", restrictions: { subj: ["+human"], obj: ["+textual"] } },
@@ -277,7 +278,7 @@ export const VERBS_DATA = [
   { word: "pregunta", type: "t", restrictions: { subj: ["+human"] } },
   { word: "responde", type: "t", restrictions: { subj: ["+human"] } },
   
-  // Transitivos técnicos
+  // Transitivos técnicos (verbos relacionados con tecnología y procesos)
   { word: "interpreta", type: "t", restrictions: { subj: ["+human", "+machine"], obj: ["+textual", "+abstract"] } },
   { word: "analiza", type: "t", restrictions: { subj: ["+human", "+machine"], obj: ["+abstract"] } },
   { word: "valida", type: "t", restrictions: { subj: ["+human", "+machine"], obj: ["+abstract"] } },
@@ -296,6 +297,7 @@ export const VERBS_DATA = [
   { word: "guarda", type: "t", restrictions: { subj: ["+human", "+machine"] } }
 ];
 
+// Conjugaciones de verbos para singular y plural (3ª persona)
 export const VERBS_CONJUGATIONS = {
   "es": { sing: "es", plur: "son" },
   "está": { sing: "está", plur: "están" },
@@ -363,8 +365,10 @@ export const VERBS_CONJUGATIONS = {
   "guarda": { sing: "guarda", plur: "guardan" }
 };
 
+// Lista simple de verbos (solo las palabras)
 export const VERBS = VERBS_DATA.map(v => v.word);
 
+// Lista de adjetivos con información de género (m: masculino, f: femenino, n: neutro)
 export const ADJECTIVES = [
   { base: "grande", type: "n" },
   { base: "pequeño", type: "m" },
@@ -430,7 +434,7 @@ export const ADJECTIVES = [
   { base: "aburrida", type: "f" }
 ];
 
-// Conectores y preposiciones permitidos
+// Conectores y preposiciones permitidos en el juego
 export const ALLOWED_CONNECTORS = [
   "y", "e", "o", "u", "pero", "mas", "sino", "porque", "que", "si",
   "en", "a", "de", "con", "por", "para", "sin", "sobre", "bajo",
@@ -438,13 +442,14 @@ export const ALLOWED_CONNECTORS = [
   "entre", "contra", "tras"
 ];
 
-// Puntuación permitida
+// Símbolos de puntuación permitidos
 export const ALLOWED_PUNCTUATION = [".", ",", ";", ":", "!", "?", "¿", "¡", "(", ")", "\"", "'"];
 
+// Lista completa de todas las palabras permitidas en el juego
 export const ALL_WORDS = [
-  ...ARTICLES.map(a => a.word),
-  ...NOUNS.map(n => n.word),
-  ...VERBS,
-  ...ADJECTIVES.map(a => a.base),
-  ...ALLOWED_CONNECTORS
+  ...ARTICLES.map(a => a.word),          // Extrae solo las palabras de artículos
+  ...NOUNS.map(n => n.word),             // Extrae solo las palabras de sustantivos
+  ...VERBS,                              // Ya es una lista de palabras
+  ...ADJECTIVES.map(a => a.base),        // Extrae la base de los adjetivos
+  ...ALLOWED_CONNECTORS                  // Conectores y preposiciones
 ];
