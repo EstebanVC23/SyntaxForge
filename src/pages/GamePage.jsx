@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GameContext } from "../context/GameContext.jsx";
 import { WordBankContext } from "../context/WordBankContext.jsx";
 import FragmentDisplay from "../components/FragmentDisplay.jsx";
@@ -12,10 +12,13 @@ import { validateVocabulary } from "../logic/utils/vocabularyValidator.js";
 
 export default function GamePage() {
   const { fragment, currentText, setCurrentText, feedback, setFeedback, nextRound, round, score, setScore } = useContext(GameContext);
-  const { bank, addToInput, refreshBank, wordPoints, resetWordPoints } = useContext(WordBankContext);
+  const { bank, refreshBank, resetWordPoints } = useContext(WordBankContext);
+  const [showTree, setShowTree] = useState(false); // <--- Estado para mostrar/ocultar árbol
 
   function handleValidate() {
     setFeedback(null);
+    setShowTree(false); // ocultar el árbol al validar nuevamente
+
     const userInput = currentText.trim();
     if (!userInput) {
       setFeedback({ valid: false, errors: [{ rule: "Validación", message: "Debes escribir algo antes de validar." }] });
@@ -23,7 +26,6 @@ export default function GamePage() {
     }
 
     const tokens = tokenize(userInput);
-
     const vocabCheck = validateVocabulary(tokens);
     if (!vocabCheck.valid) {
       const invalidList = vocabCheck.invalidWords.map(w => `"${w.word}"`).join(", ");
@@ -66,11 +68,13 @@ export default function GamePage() {
     resetWordPoints();
     setCurrentText('');
     setFeedback(null);
+    setShowTree(false);
   }
 
   function handleClearText() {
     setCurrentText('');
     setFeedback(null);
+    setShowTree(false);
   }
 
   return (
@@ -114,6 +118,14 @@ export default function GamePage() {
             >
               🗑️ Borrar texto
             </button>
+            {feedback?.valid && currentText.trim() && (
+              <button
+                onClick={() => setShowTree(prev => !prev)}
+                style={{ background: '#4f46e5', color: 'white' }}
+              >
+                {showTree ? 'Ocultar árbol' : 'Mostrar árbol sintáctico'}
+              </button>
+            )}
           </div>
 
           <FeedbackBox result={feedback} />
@@ -124,7 +136,7 @@ export default function GamePage() {
             </div>
           )}
 
-          {feedback?.valid && currentText.trim() && <SyntaxTreeViewer text={currentText} />}
+          {showTree && <SyntaxTreeViewer text={currentText} />}
         </div>
 
         <div style={{ flex: '0 1 350px', minWidth: 280 }}>

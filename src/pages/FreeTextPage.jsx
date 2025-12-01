@@ -12,9 +12,11 @@ export default function FreeTextPage() {
   const { bank } = useContext(WordBankContext);
   const [text, setText] = useState('');
   const [report, setReport] = useState(null);
+  const [showTree, setShowTree] = useState(false); // <--- Estado para mostrar/ocultar árbol
 
   function handleValidate() {
     setReport(null);
+    setShowTree(false); // ocultar el árbol al validar nuevamente
 
     const sentences = splitIntoSentences(text);
 
@@ -84,6 +86,7 @@ export default function FreeTextPage() {
   function handleClear() {
     setText('');
     setReport(null);
+    setShowTree(false);
   }
 
   return (
@@ -133,6 +136,16 @@ export default function FreeTextPage() {
           >
             🗑️ Limpiar
           </button>
+
+          {/* Botón para mostrar/ocultar árbol */}
+          {report && report.valid && text.trim() && (
+            <button
+              onClick={() => setShowTree(prev => !prev)}
+              style={{ background: '#4f46e5', color: 'white' }}
+            >
+              {showTree ? 'Ocultar árbol' : 'Mostrar árbol sintáctico'}
+            </button>
+          )}
         </div>
       </div>
 
@@ -206,7 +219,8 @@ export default function FreeTextPage() {
             ))}
           </div>
 
-          {report.valid && <SyntaxTreeViewer text={text} />}
+          {/* Mostrar árbol solo si showTree es true */}
+          {showTree && <SyntaxTreeViewer text={text} />}
         </div>
       )}
     </div>
