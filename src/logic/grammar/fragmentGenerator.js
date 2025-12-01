@@ -10,9 +10,43 @@ function pluralize(noun) {
   return noun + "es";
 }
 
-function agreeAdjective(adjObj, gender, plural) {
-  let word = adjObj.base;
+/**
+ * Aplica concordancia + APOCÓPE (bueno→buen, grande→gran, etc.)
+ * Se añadió parámetro isPreNoun para saber si va antes del sustantivo.
+ */
+function agreeAdjective(adjObj, gender, plural, isPreNoun = false) {
+  let word = adjObj.base.toLowerCase();
+
+  /* ---------------------
+     REGLAS DE APÓCOPE
+     Solo si:
+     - va ANTES del sustantivo
+     - es singular (salvo "gran", que también funciona así)
+  ---------------------- */
   
+  if (isPreNoun && !plural) {
+    // bueno → buen (solo masc. sing.)
+    if (word === "bueno" && gender === "m") {
+      return "buen";
+    }
+
+    // grande → gran (invariable en género)
+    if (word === "grande") {
+      return "gran";
+    }
+
+    // ninguno → ningún
+    if (word === "ninguno" && gender === "m") {
+      return "ningún";
+    }
+
+    // uno → un
+    if (word === "uno" && gender === "m") {
+      return "un";
+    }
+  }
+
+  // Concordancia normal
   if (adjObj.type === "m" && gender === "f") {
     if (word.endsWith("o")) word = word.slice(0, -1) + "a"; 
   }
@@ -41,9 +75,6 @@ function conjugate(verbSingularBase, plural) {
 
 /**
  * Construye un Sintagma Nominal (SN). 
- * @param {string[]} requiredFeatures - Características semánticas que debe cumplir el sustantivo.
- * @param {string} nounToAvoid - El sustantivo base del SN anterior (para evitar repetición).
- * @param {string} adjToAvoid - El adjetivo base del SN anterior (para evitar repetición).
  */
 function buildSN(requiredFeatures = [], nounToAvoid = null, adjToAvoid = null) { 
   let availableNouns = NOUNS;
@@ -58,7 +89,7 @@ function buildSN(requiredFeatures = [], nounToAvoid = null, adjToAvoid = null) {
     }
   }
 
-  // 2. Evitar repetición de sustantivo (si es posible)
+  // 2. Evitar repetición de sustantivo
   if (nounToAvoid) {
     const withoutRepeat = availableNouns.filter(noun => noun.word !== nounToAvoid);
     if (withoutRepeat.length > 0) {
@@ -75,11 +106,11 @@ function buildSN(requiredFeatures = [], nounToAvoid = null, adjToAvoid = null) {
   const articleCandidates = ARTICLES.filter(a => a.gender === gender && a.plural === plural);
   const article = pick(articleCandidates);
 
-  // 5. Pluralizar sustantivo si es necesario
+  // 5. Pluralizar sustantivo
   let noun = nounObj.word;
   if (plural) noun = pluralize(noun);
 
-  // 6. Decisión sobre el Adjetivo
+  // 6. Adjetivo
   let addAdj = Math.random() < 0.4;
   let adjWord = null;
   let adjBase = null;
@@ -87,27 +118,21 @@ function buildSN(requiredFeatures = [], nounToAvoid = null, adjToAvoid = null) {
   if (addAdj) {
     let adjCandidates = ADJECTIVES;
     
-    // ESTRATEGIA: Si el sustantivo se repitió, el SN DEBE diferenciarse
     const nounRepeated = (nounToAvoid && nounObj.word === nounToAvoid);
     
     if (nounRepeated) {
-      // Caso crítico: sustantivo repetido
       if (adjToAvoid) {
-        // Forzar adjetivo diferente
         const withoutRepeat = ADJECTIVES.filter(a => a.base !== adjToAvoid);
         if (withoutRepeat.length > 0) {
           adjCandidates = withoutRepeat;
-          addAdj = true; // FORZAR adjetivo para diferenciar
+          addAdj = true;
         } else {
-          // No hay adjetivos diferentes: no usar adjetivo (quedará igual)
           addAdj = false;
         }
       } else {
-        // SN1 no tenía adjetivo: agregar uno obligatoriamente para diferenciar
         addAdj = true;
       }
     } else {
-      // Sustantivo NO repetido: evitar adjetivo si es necesario
       if (adjToAvoid) {
         const withoutRepeat = ADJECTIVES.filter(a => a.base !== adjToAvoid);
         if (withoutRepeat.length > 0) {
@@ -119,7 +144,9 @@ function buildSN(requiredFeatures = [], nounToAvoid = null, adjToAvoid = null) {
     if (addAdj) {
       const adjObj = pick(adjCandidates);
       adjBase = adjObj.base;
-      adjWord = agreeAdjective(adjObj, gender, plural);
+
+      // >>>>> AQUÍ se activa el apócope porque el adjetivo va antes del sustantivo
+      adjWord = agreeAdjective(adjObj, gender, plural, true);
     }
   }
 
@@ -151,7 +178,7 @@ function buildVP(needsObject) {
   };
 }
 
-/* PLANTILLAS REFINADAS */
+/* PLANTILLAS */
 const TEMPLATES = [
   { tpl: ["SN", "VP"], requiresObject: false }, 
   { tpl: ["SN", "VP", "SN"], requiresObject: true },
@@ -162,11 +189,9 @@ export function generateFragment() {
   const tplObj = pick(TEMPLATES);
   const tpl = tplObj.tpl;
 
-  // 1. Construir el verbo primero
   const vpObj = buildVP(tplObj.requiresObject);
   const verbRestrictions = vpObj.restrictions || {};
 
-  // 2. Construir el sujeto (SN1)
   const subjectRestrictions = verbRestrictions.subj || [];
   const subjectObj = buildSN(subjectRestrictions);
   const subjPlural = subjectObj.plural; 
@@ -174,19 +199,15 @@ export function generateFragment() {
   const subjectNounBase = subjectObj.noun; 
   const subjectAdjBase = subjectObj.adj;
 
-  // 3. Construir el objeto (SN2) si es necesario
   let objectObj = null;
   if (tplObj.requiresObject) {
     const objectRestrictions = verbRestrictions.obj || [];
-    // Pasar las restricciones para evitar repetición de sustantivo Y adjetivo
     objectObj = buildSN(objectRestrictions, subjectNounBase, subjectAdjBase);
   }
 
-  // 4. Conjugar el verbo según el número del sujeto
   const verbSingularBase = vpObj.words[0];
   vpObj.words = [conjugate(verbSingularBase, subjPlural)]; 
 
-  // 5. Ensamblar la frase final - CORREGIDO: usar índice para diferenciar SN1 de SN2
   let snCount = 0;
   const result = tpl.flatMap(el => {
     if (el === "SN") {

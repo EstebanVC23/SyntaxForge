@@ -5,16 +5,13 @@ import FragmentDisplay from "../components/FragmentDisplay.jsx";
 import WordBank from "../components/WordBank.jsx";
 import SentenceInput from "../components/SentenceInput.jsx";
 import FeedbackBox from "../components/FeedbackBox.jsx";
+import SyntaxTreeViewer from "../components/SyntaxTreeViewer.jsx";
 import { tokenize } from "../logic/utils/tokenizer.js";
 import { validateTokens } from "../logic/grammar/validateTokens.js";
 import { validateVocabulary } from "../logic/utils/vocabularyValidator.js";
 
 export default function GamePage() {
-  const { 
-    fragment, currentText, setCurrentText, feedback, setFeedback, 
-    nextRound, round, score, setScore 
-  } = useContext(GameContext);
-
+  const { fragment, currentText, setCurrentText, feedback, setFeedback, nextRound, round, score, setScore } = useContext(GameContext);
   const { bank, addToInput, refreshBank, wordPoints, resetWordPoints } = useContext(WordBankContext);
 
   function handleValidate() {
@@ -27,7 +24,6 @@ export default function GamePage() {
 
     const tokens = tokenize(userInput);
 
-    // Validar vocabulario
     const vocabCheck = validateVocabulary(tokens);
     if (!vocabCheck.valid) {
       const invalidList = vocabCheck.invalidWords.map(w => `"${w.word}"`).join(", ");
@@ -47,23 +43,27 @@ export default function GamePage() {
     }
 
     const res = validateTokens(tokens);
-
-    // Contar palabras del banco usadas
+    const totalWords = tokens.length;
     const usedWords = tokens.filter(t => bank.includes(t.toLowerCase()));
-    const wordScore = usedWords.length;
-    
-    if (res.valid) {
-      setScore(prev => prev + wordScore);
-      setFeedback({ ...res, score: score + wordScore, usedWords });
-    } else {
-      setFeedback({ ...res, score, usedWords });
-    }
+    const bankWordScore = usedWords.length;
+    const attemptScore = totalWords + bankWordScore;
+
+    if (res.valid) setScore(prev => prev + attemptScore);
+
+    setFeedback({
+      ...res,
+      score: res.valid ? score + attemptScore : score,
+      usedWords,
+      totalWords,
+      bankWordScore,
+      attemptScore
+    });
   }
 
   function handleNextRound() {
     nextRound();
-    refreshBank();      // refrescar banco al siguiente intento
-    resetWordPoints();  // reiniciar puntos del banco
+    refreshBank();
+    resetWordPoints();
     setCurrentText('');
     setFeedback(null);
   }
@@ -75,51 +75,61 @@ export default function GamePage() {
 
   return (
     <div className="container">
-      <h1>GDC Game — Modo Construcción</h1>
-      <div style={{ display: 'flex', gap: 16 }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ padding: 12, background: '#e3f2fd', borderRadius: 8, marginBottom: 12, border: '2px solid #2196f3' }}>
-            <strong style={{ fontSize: '1.1rem' }}>📝 Tu objetivo:</strong>
-            <div style={{ marginTop: 8, fontSize: '1.2rem', fontWeight: 'bold', color: '#1565c0' }}>
+      <h1>🎯 GDC Game — Modo Construcción</h1>
+      
+      <div style={{ display: 'flex', gap: 20, marginBottom: 20, justifyContent: 'space-between', flexWrap: 'wrap' }}>
+        <div className="score-display">
+          <span>🏆 Ronda:</span>
+          <span style={{ fontSize: '1.2rem' }}>{round}</span>
+        </div>
+        <div className="score-display">
+          <span>⭐ Puntuación:</span>
+          <span style={{ fontSize: '1.2rem' }}>{score}</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+        <div style={{ flex: '1 1 500px', minWidth: 0 }}>
+          <div className="objective-box">
+            <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#4c1d95', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+              🎯 Tu objetivo:
+            </div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#5b21b6', padding: '12px 16px', background: 'white', borderRadius: '10px', marginBottom: 12, boxShadow: '0 2px 8px rgba(102, 126, 234, 0.15)' }}>
               {fragment}
             </div>
-            <div style={{ marginTop: 8, fontSize: '0.9rem', color: '#555', fontStyle: 'italic' }}>
-              Debes incluir esta estructura en tu oración y agregar más contenido.
+            <div style={{ fontSize: '0.9rem', color: '#6b7280', fontStyle: 'italic', lineHeight: '1.6' }}>
+              💡 Debes incluir esta estructura en tu oración y agregar más contenido.
               Solo puedes usar palabras del banco de palabras.
             </div>
           </div>
           
           <SentenceInput onValidate={handleValidate} />
 
-          <div style={{ marginTop: 8 }}>
-            <button onClick={handleNextRound} style={{ marginRight: 8 }}>Siguiente intento</button>
+          <div style={{ marginTop: 16, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button onClick={handleNextRound}>⏭️ Siguiente intento</button>
             <button 
               onClick={handleClearText}
               disabled={feedback && feedback.valid}
-              style={{
-                opacity: (feedback && feedback.valid) ? 0.5 : 1,
-                cursor: (feedback && feedback.valid) ? 'not-allowed' : 'pointer'
-              }}
+              style={{ background: feedback && feedback.valid ? '#9ca3af' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' }}
             >
-              Borrar texto
+              🗑️ Borrar texto
             </button>
           </div>
 
           <FeedbackBox result={feedback} />
+
           {feedback?.usedWords && feedback.usedWords.length > 0 && (
-            <div style={{ marginTop: 8, fontStyle: 'italic' }}>
-              Palabras del banco usadas: {feedback.usedWords.join(", ")}
+            <div style={{ marginTop: 12, padding: '12px 16px', background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)', borderRadius: '10px', fontSize: '0.95rem', color: '#78350f', boxShadow: '0 2px 8px rgba(251, 191, 36, 0.2)' }}>
+              <strong>💼 Palabras del banco usadas:</strong> {feedback.usedWords.join(", ")}
             </div>
           )}
+
+          {feedback?.valid && currentText.trim() && <SyntaxTreeViewer text={currentText} />}
         </div>
 
-        <div style={{ width: 320 }}>
+        <div style={{ flex: '0 1 350px', minWidth: 280 }}>
           <WordBank />
         </div>
-      </div>
-
-      <div style={{ marginTop: 16 }}>
-        <strong>Ronda:</strong> {round} &nbsp; <strong>Puntuación:</strong> {score}
       </div>
     </div>
   );

@@ -12,35 +12,51 @@ export default function App() {
   return (
     <WordBankProvider>
       <GameProvider>
-        <div style={{ padding: 20 }}>
-          <header style={{ display: "flex", gap: 12, marginBottom: 12 }}>
+        <div style={{ padding: 20, minHeight: '100vh' }}>
+          <header style={{ 
+            display: "flex", 
+            gap: 12, 
+            marginBottom: 20,
+            justifyContent: "center",
+            flexWrap: "wrap"
+          }}>
             {/* Modo de juego */}
             <div style={{ position: "relative" }}>
-              <button onClick={() => setGameModeOpen(!gameModeOpen)}>
-                Modo de Juego
+              <button 
+                onClick={() => setGameModeOpen(!gameModeOpen)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8
+                }}
+              >
+                🎮 Modo de Juego
               </button>
               {gameModeOpen && (
-                <div style={{
-                  position: "absolute",
-                  top: "100%",
-                  left: 0,
-                  background: "#fff",
-                  border: "1px solid #ccc",
-                  borderRadius: 4,
-                  padding: 4,
-                  zIndex: 10
-                }}>
+                <div className="dropdown-menu" style={{ minWidth: 200 }}>
                   <button 
-                    style={{ display: "block", width: "100%", margin: 2 }}
+                    style={{ 
+                      display: "block", 
+                      width: "100%", 
+                      margin: "4px 0",
+                      background: route === "game" ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "#f3f4f6",
+                      color: route === "game" ? "white" : "#374151"
+                    }}
                     onClick={() => { setRoute("game"); setGameModeOpen(false); }}
                   >
-                    Modo Construcción
+                    🏗️ Modo Construcción
                   </button>
                   <button 
-                    style={{ display: "block", width: "100%", margin: 2 }}
+                    style={{ 
+                      display: "block", 
+                      width: "100%", 
+                      margin: "4px 0",
+                      background: route === "free" ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" : "#f3f4f6",
+                      color: route === "free" ? "white" : "#374151"
+                    }}
                     onClick={() => { setRoute("free"); setGameModeOpen(false); }}
                   >
-                    Modo Texto Libre
+                    📝 Modo Texto Libre
                   </button>
                 </div>
               )}

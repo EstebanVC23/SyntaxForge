@@ -6,12 +6,10 @@ export default function SentenceInput({ onValidate }) {
   const { currentText, setCurrentText, feedback } = useContext(GameContext);
   const textareaRef = useRef();
 
-  // Bloquear edición si la respuesta fue válida
   const isLocked = feedback && feedback.valid;
 
   useEffect(() => {
     function handler(e) {
-      // No permitir agregar palabras si está bloqueado
       if (isLocked) return;
       
       const word = e.detail;
@@ -23,39 +21,54 @@ export default function SentenceInput({ onValidate }) {
   }, [setCurrentText, isLocked]);
 
   function handleTextChange(e) {
-    // Si está bloqueado, no permitir cambios
     if (isLocked) return;
     setCurrentText(e.target.value);
   }
 
   return (
-    <div style={{ marginTop: 12 }}>
+    <div className="sentence-card">
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 12,
+        color: '#4c1d95',
+        fontWeight: 600
+      }}>
+        <span style={{ fontSize: '1.2rem' }}>✍️</span>
+        <span>Escribe tu oración:</span>
+      </div>
+      
       <textarea
         ref={textareaRef}
         value={currentText}
         onChange={handleTextChange}
         id="sentenceInput"
-        placeholder={isLocked ? "¡Correcto! Presiona 'Siguiente intento' para continuar." : "Incluye la estructura objetivo en tu oración..."}
-        rows={4}
+        placeholder={isLocked 
+          ? "¡Correcto! Presiona 'Siguiente intento' para continuar." 
+          : "Incluye la estructura objetivo en tu oración..."
+        }
+        rows={5}
         style={{ 
-          width: '100%', 
-          padding: 8,
-          background: isLocked ? '#e8f5e9' : '#fff',
-          cursor: isLocked ? 'not-allowed' : 'text'
+          background: isLocked ? '#d1fae5' : 'white',
+          cursor: isLocked ? 'not-allowed' : 'text',
+          border: isLocked ? '2px solid #10b981' : '2px solid #e0e7ff'
         }}
         disabled={isLocked}
       />
 
-      <div style={{ marginTop: 8, display: 'flex', gap: 8 }}>
+      <div style={{ marginTop: 12 }}>
         <button 
           onClick={onValidate}
           disabled={!currentText.trim() || isLocked}
           style={{
-            opacity: (!currentText.trim() || isLocked) ? 0.5 : 1,
-            cursor: (!currentText.trim() || isLocked) ? 'not-allowed' : 'pointer'
+            width: '100%',
+            padding: '14px',
+            fontSize: '1.05rem',
+            fontWeight: 'bold'
           }}
         >
-          Validar
+          {isLocked ? '✅ Validado correctamente' : '🚀 Validar mi oración'}
         </button>
       </div>
     </div>
