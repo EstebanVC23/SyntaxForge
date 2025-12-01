@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ALL_WORDS } from "../data/wordLists.js";
 import "../styles/DictionaryDropdown.css";
 
@@ -21,22 +21,24 @@ export default function DictionaryDropdown({ addWord }) {
 
       {open && (
         <div className="dropdown-menu">
+          {/* Header */}
           <div className="dropdown-header">
             <div className="dropdown-title">📖 Diccionario Completo</div>
             <div className="dropdown-subtitle">{ALL_WORDS.length} palabras disponibles</div>
           </div>
 
+          {/* Search */}
           <div className="dropdown-search">
-            <div className="search-icon">🔍</div>
             <input
               type="text"
-              placeholder="Buscar palabra..."
+              placeholder="🔍 Buscar palabra..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="search-input"
             />
           </div>
 
+          {/* Search count */}
           {search && (
             <div className="search-count">
               {filtered.length > 0 
@@ -46,6 +48,7 @@ export default function DictionaryDropdown({ addWord }) {
             </div>
           )}
 
+          {/* Word list */}
           <div className="dropdown-list">
             {filtered.length > 0 ? (
               filtered.map((w, i) => (
@@ -55,6 +58,7 @@ export default function DictionaryDropdown({ addWord }) {
                   onClick={() => {
                     addWord(w);
                     setOpen(false);
+                    setSearch(""); // opcional: limpiar input al agregar
                   }}
                 >
                   <span className="item-word">{w}</span>
@@ -70,6 +74,7 @@ export default function DictionaryDropdown({ addWord }) {
             )}
           </div>
 
+          {/* Footer */}
           <div className="dropdown-footer">
             <button onClick={() => setOpen(false)}>✕ Cerrar diccionario</button>
           </div>

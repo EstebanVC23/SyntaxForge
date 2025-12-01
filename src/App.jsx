@@ -6,6 +6,7 @@ import GamePage from "./pages/GamePage.jsx";
 import FreeTextPage from "./pages/FreeTextPage.jsx";
 import TheoryPage from "./pages/TheoryPage.jsx";
 import DictionaryDropdown from "./components/DictionaryDropdown.jsx";
+import Footer from "./components/Footer.jsx";
 
 import "./styles/App.css"; // Importamos el CSS
 
@@ -22,7 +23,7 @@ export default function App() {
   return (
     <WordBankProvider>
       <GameProvider>
-        <div className="app-container">
+        <div className="app-container" style={{ paddingBottom: "70px" }}>
           <header className="app-header">
             {/* Dropdown Modo de Juego */}
             <div className="dropdown-container">
@@ -71,6 +72,9 @@ export default function App() {
             {route === "free" && <FreeTextPage />}
             {route === "theory" && <TheoryPage />}
           </main>
+
+          {/* Footer */}
+          <Footer />
         </div>
       </GameProvider>
     </WordBankProvider>
