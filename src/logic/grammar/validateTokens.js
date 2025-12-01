@@ -1,4 +1,3 @@
-// Importa las reglas de Gramática Dependiente del Contexto (GDC)
 import { GDC_RULES } from "./gdcRules.js";
 
 /**
