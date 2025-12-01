@@ -1,10 +1,15 @@
-/* Contenedor principal */
+/* 
+  ESTILOS PRINCIPALES DE LA APLICACIÓN
+  Contiene los estilos base para el layout, navegación y componentes de UI
+*/
+
+/* Contenedor principal: establece el layout base y padding */
 .app-container {
   padding: 20px;
   min-height: 100vh;
 }
 
-/* Header */
+/* Header: contiene la navegación principal con diseño flexible */
 .app-header {
   display: flex;
   gap: 12px;
@@ -13,9 +18,9 @@
   flex-wrap: wrap;
 }
 
-/* Dropdown */
+/* Dropdown: sistema de navegación desplegable */
 .dropdown-container {
-  position: relative;
+  position: relative; /* Contexto para posicionamiento absoluto del menú */
 }
 
 .dropdown-button {
@@ -39,7 +44,7 @@
   border-radius: 6px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 8px;
-  z-index: 10;
+  z-index: 10; /* Asegura que esté por encima de otros elementos */
 }
 
 .menu-item {
@@ -53,12 +58,13 @@
   cursor: pointer;
 }
 
+/* Estado activo para items del menú */
 .menu-item.active {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
-/* Botón Teoría GDC */
+/* Botón independiente para teoría GDC */
 .theory-button {
   padding: 8px 12px;
   border-radius: 6px;

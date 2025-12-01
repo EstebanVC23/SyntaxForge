@@ -1,9 +1,60 @@
-.sentence-card { padding: 16px; border: 2px solid #e0e7ff; border-radius: 10px; background: white; }
-.sentence-label { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: #4c1d95; font-weight: 600; }
-.sentence-label span:first-child { font-size: 1.2rem; }
-textarea { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #e0e7ff; font-size: 1rem; box-sizing: border-box; transition: all 0.2s; }
-textarea:focus { outline: none; border-color: #667eea; }
-textarea.locked { background: #d1fae5; border-color: #10b981; cursor: not-allowed; }
+/* 
+  ESTILOS PARA TARJETA DE ENTRADA DE ORACIONES
+  Componente para escribir y validar oraciones en el juego
+*/
+
+/* Tarjeta contenedora con borde azul claro */
+.sentence-card { 
+  padding: 16px; 
+  border: 2px solid #e0e7ff; 
+  border-radius: 10px; 
+  background: white; 
+}
+
+/* Etiqueta con icono y texto */
+.sentence-label { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  margin-bottom: 12px; 
+  color: #4c1d95; 
+  font-weight: 600; 
+}
+
+/* Tamaño aumentado para el emoji/icono */
+.sentence-label span:first-child { 
+  font-size: 1.2rem; 
+}
+
+/* Campo de texto principal */
+textarea { 
+  width: 100%; 
+  padding: 12px; 
+  border-radius: 8px; 
+  border: 2px solid #e0e7ff; 
+  font-size: 1rem; 
+  box-sizing: border-box; 
+  transition: all 0.2s; /* Transición suave para estados */
+}
+
+/* Estado de foco con borde azul */
+textarea:focus { 
+  outline: none; 
+  border-color: #667eea; 
+}
+
+/* Estado bloqueado (cuando ya está validado) */
+textarea.locked { 
+  background: #d1fae5; /* Fondo verde claro */
+  border-color: #10b981; /* Borde verde */
+  cursor: not-allowed; /* Cursor que indica no editable */
+}
+
+/* Botón de validación a ancho completo */
 .sentence-button button {
-  width: 100%; padding: 14px; font-size: 1.05rem; font-weight: bold; cursor: pointer;
+  width: 100%; 
+  padding: 14px; 
+  font-size: 1.05rem; 
+  font-weight: bold; 
+  cursor: pointer;
 }

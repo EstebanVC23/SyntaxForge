@@ -1,3 +1,9 @@
+/* 
+  ESTILOS PARA PÁGINA DE TEXTO LIBRE
+  Diseño para el modo de validación de párrafos completos
+*/
+
+/* Contenedor de instrucciones con gradiente decorativo */
 .free-text-page .instructions {
   padding: 16px 20px;
   background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
@@ -8,41 +14,48 @@
   line-height: 1.8;
 }
 
+/* Información adicional sobre puntuación */
 .free-text-page .instructions .score-info {
   margin-top: 8px;
   font-size: 0.95rem;
 }
 
+/* Tarjeta contenedora del área de texto */
 .free-text-page .sentence-card {
   margin-top: 16px;
 }
 
+/* Campo de texto para entrada de párrafos */
 .free-text-page .sentence-card textarea {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
   font-size: 1rem;
-  resize: vertical;
+  resize: vertical; /* Permite redimensionar solo verticalmente */
 }
 
+/* Contenedor de botones de acción */
 .free-text-page .action-buttons {
   margin-top: 16px;
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas pequeñas */
 }
 
+/* Botón especial para mostrar árbol sintáctico */
 .free-text-page .tree-btn {
   background: #4f46e5;
   color: white;
 }
 
+/* Botón para limpiar texto con gradiente rojo */
 .free-text-page .clear-btn {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
 }
 
+/* Caja de error para mensajes generales */
 .free-text-page .error-box {
   margin-top: 20px;
   padding: 20px;
@@ -53,10 +66,12 @@
   font-weight: 500;
 }
 
+/* Sección principal del reporte de validación */
 .free-text-page .report-section {
   margin-top: 20px;
 }
 
+/* Resumen general del reporte (válido/inválido) */
 .free-text-page .report-summary {
   padding: 20px;
   border-radius: 12px;
@@ -65,16 +80,19 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Variante para reporte válido (fondo verde) */
 .free-text-page .report-summary.valid {
   background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
   border-color: #6ee7b7;
 }
 
+/* Variante para reporte inválido (fondo rojo) */
 .free-text-page .report-summary.invalid {
   background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
   border-color: #fca5a5;
 }
 
+/* Título del resumen con icono grande */
 .free-text-page .summary-title {
   font-size: 1.1rem;
   font-weight: bold;
@@ -82,53 +100,61 @@
 }
 
 .free-text-page .summary-title span {
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* Tamaño aumentado para emojis/iconos */
 }
 
+/* Detalles del resumen */
 .free-text-page .summary-details {
   font-size: 0.95rem;
 }
 
+/* Tarjetas individuales para cada oración del reporte */
 .free-text-page .report-details .report-card {
   margin-bottom: 16px;
   padding: 16px;
   border-radius: 12px;
-  background: #f9fafb;
+  background: #f9fafb; /* Fondo gris claro */
 }
 
+/* Borde izquierdo verde para oraciones válidas */
 .free-text-page .report-details .report-card.valid {
   border-left: 4px solid #10b981;
 }
 
+/* Borde izquierdo rojo para oraciones inválidas */
 .free-text-page .report-details .report-card.invalid {
   border-left: 4px solid #ef4444;
 }
 
+/* Texto de la oración analizada */
 .free-text-page .sentence-text {
   margin-bottom: 12px;
 }
 
+/* Grid de estadísticas para cada oración */
 .free-text-page .sentence-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Grid responsive */
   gap: 12px;
   margin-bottom: 12px;
 }
 
+/* Elementos individuales de estadísticas */
 .free-text-page .sentence-stats > div {
   padding: 10px 14px;
   border-radius: 8px;
   font-size: 0.9rem;
 }
 
+/* Colores diferenciados para cada tipo de estadística */
 .free-text-page .sentence-stats > div:nth-child(1) {
-  background: #ede9fe;
+  background: #ede9fe; /* Púrpura claro para total de palabras */
 }
 
 .free-text-page .sentence-stats > div:nth-child(2) {
-  background: #dbeafe;
+  background: #dbeafe; /* Azul claro para palabras del banco */
 }
 
 .free-text-page .sentence-stats > div:nth-child(3) {
-  background: #fef3c7;
+  background: #fef3c7; /* Amarillo claro para puntos */
 }

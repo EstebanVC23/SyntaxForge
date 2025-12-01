@@ -1,13 +1,17 @@
 import "../styles/TheoryPage.css";
 
+// Página de teoría que explica las Gramáticas Dependientes del Contexto (GDC)
 export default function TheoryPage() {
   return (
     <div className="container">
+      {/* Título principal de la página de teoría */}
       <h1>📚 Teoría Completa: Gramáticas Dependientes del Contexto (GDC)</h1>
 
+      {/* Sección 1: Introducción a las GDC */}
       <section id="introduccion-gdc" className="theory-section">
         <h2>1. ¿Qué son las Gramáticas Dependientes del Contexto?</h2>
         
+        {/* Definición formal de GDC */}
         <div className="definition-box">
           <h3>Definición Formal</h3>
           <p>Una <strong>Gramática Dependiente del Contexto (GDC)</strong> es una 4-tupla (V, Σ, R, S) donde:</p>
@@ -20,6 +24,7 @@ export default function TheoryPage() {
           <p>Donde A ∈ V, α, β ∈ (V ∪ Σ)*, y γ ∈ (V ∪ Σ)+</p>
         </div>
 
+        {/* Concepto clave: dependencia contextual */}
         <div className="key-concept">
           <h3>Característica Fundamental</h3>
           <p>La regla <strong>αAβ → αγβ</strong> significa que el no terminal A puede ser reemplazado por γ 
@@ -28,10 +33,13 @@ export default function TheoryPage() {
         </div>
       </section>
 
+      {/* Sección 2: Jerarquía de Chomsky - Posición de las GDC */}
       <section id="jerarquia-chomsky" className="theory-section">
         <h2>2. Jerarquía de Chomsky: Posición de las GDC</h2>
         
+        {/* Diagrama de la jerarquía de Chomsky */}
         <div className="chomsky-hierarchy">
+          {/* Nivel 0: Gramáticas Irrestrictas */}
           <div className="hierarchy-level">
             <h4>Tipo 0: Gramáticas Irrestrictas</h4>
             <p>α → β (sin restricciones)</p>
@@ -39,6 +47,7 @@ export default function TheoryPage() {
             <p><strong>Lenguajes:</strong> Recursivamente enumerables</p>
           </div>
           
+          {/* Nivel 1: GDC (enfoque del proyecto) */}
           <div className="hierarchy-level gdc-level">
             <h4>Tipo 1: Gramáticas Sensibles al Contexto (GDC)</h4>
             <p>αAβ → αγβ, donde |γ| ≥ 1</p>
@@ -47,6 +56,7 @@ export default function TheoryPage() {
             <p className="highlight">Enfoque de nuestro proyecto</p>
           </div>
           
+          {/* Nivel 2: Gramáticas Independientes del Contexto */}
           <div className="hierarchy-level">
             <h4>Tipo 2: Gramáticas Independientes del Contexto (GIC)</h4>
             <p>A → γ (sin contexto)</p>
@@ -54,6 +64,7 @@ export default function TheoryPage() {
             <p><strong>Lenguajes:</strong> Independientes del contexto</p>
           </div>
           
+          {/* Nivel 3: Gramáticas Regulares */}
           <div className="hierarchy-level">
             <h4>Tipo 3: Gramáticas Regulares</h4>
             <p>A → aB o A → a</p>
@@ -63,16 +74,20 @@ export default function TheoryPage() {
         </div>
       </section>
 
+      {/* Sección 3: Propiedades matemáticas de las GDC */}
       <section id="propiedades-gdc" className="theory-section">
         <h2>3. Propiedades Matemáticas de las GDC</h2>
         
+        {/* Grid de propiedades con tarjetas */}
         <div className="properties-grid">
+          {/* Propiedad 1: No contracción */}
           <div className="property-card">
             <h4>No Contración</h4>
             <p>En GDC, |γ| ≥ |A|, lo que significa que las derivaciones nunca acortan la cadena.</p>
             <p>Esto asegura que el lenguaje sea <strong>creciente</strong>.</p>
           </div>
           
+          {/* Propiedad 2: Clausura bajo operaciones */}
           <div className="property-card">
             <h4>Clausura</h4>
             <p>Los lenguajes sensibles al contexto son cerrados bajo:</p>
@@ -84,6 +99,7 @@ export default function TheoryPage() {
             </ul>
           </div>
           
+          {/* Propiedad 3: Decidibilidad */}
           <div className="property-card">
             <h4>Decidibilidad</h4>
             <p>Para GDC:</p>
@@ -94,6 +110,7 @@ export default function TheoryPage() {
             </ul>
           </div>
           
+          {/* Propiedad 4: Complejidad computacional */}
           <div className="property-card">
             <h4>Complejidad Computacional</h4>
             <p>El problema de pertenencia para GDC está en:</p>
@@ -105,14 +122,17 @@ export default function TheoryPage() {
         </div>
       </section>
 
+      {/* Sección 4: Ejemplos lingüísticos de GDC */}
       <section id="ejemplos-linguisticos" className="theory-section">
         <h2>4. Ejemplos Lingüísticos de GDC</h2>
         
+        {/* Ejemplo 1: Lenguaje aⁿbⁿcⁿ */}
         <h3>4.1 Lenguaje aⁿbⁿcⁿ</h3>
         <div className="language-example">
           <p>L = {"{aⁿbⁿcⁿ | n ≥ 1}"}</p>
           <p>Este lenguaje <strong>no puede ser generado por GIC</strong> pero sí por GDC:</p>
           
+          {/* Reglas de producción para aⁿbⁿcⁿ */}
           <div className="production-rules">
             <h4>Reglas de Producción:</h4>
             <pre>
@@ -125,22 +145,26 @@ cC → cc`}
             </pre>
           </div>
           
+          {/* Ejemplo de derivación */}
           <div className="derivation-example">
             <h4>Derivación para n=2 (aabbcc):</h4>
             <p>S ⇒ aSBC ⇒ aaBCBC ⇒ aabCBC ⇒ aabBCC ⇒ aabbCC ⇒ aabbcC ⇒ aabbcc</p>
           </div>
         </div>
         
+        {/* Ejemplo 2: Concordancia en lenguaje natural */}
         <h3>4.2 Concordancia en Lenguaje Natural</h3>
         <div className="natural-language-example">
           <p>En español, la concordancia sujeto-verbo es un fenómeno dependiente del contexto:</p>
           
+          {/* Reglas de concordancia en español */}
           <div className="rule-example">
             <h4>Regla GDC para concordancia:</h4>
             <p>[SN<sub>singular</sub>] + [V] → [SN<sub>singular</sub>] + [V<sub>singular</sub>]</p>
             <p>[SN<sub>plural</sub>] + [V] → [SN<sub>plural</sub>] + [V<sub>plural</sub>]</p>
           </div>
           
+          {/* Ejemplo de aplicación */}
           <div className="application-example">
             <p><strong>Aplicación:</strong> "El gato come" vs "Los gatos comen"</p>
             <p>La forma verbal <em>depende del número gramatical del sujeto</em>, que está a su izquierda.</p>
@@ -148,10 +172,13 @@ cC → cc`}
         </div>
       </section>
 
+      {/* Sección 5: Aplicaciones reales de las GDC */}
       <section id="aplicaciones-reales" className="theory-section">
         <h2>5. Aplicaciones Reales de las GDC</h2>
         
+        {/* Lista de aplicaciones en diferentes campos */}
         <div className="applications-list">
+          {/* Aplicación 1: Procesamiento de lenguaje natural */}
           <div className="application-item">
             <h4>Procesamiento de Lenguaje Natural</h4>
             <ul>
@@ -161,6 +188,7 @@ cC → cc`}
             </ul>
           </div>
           
+          {/* Aplicación 2: Compiladores y análisis de código */}
           <div className="application-item">
             <h4>Compiladores y Análisis de Código</h4>
             <ul>
@@ -170,6 +198,7 @@ cC → cc`}
             </ul>
           </div>
           
+          {/* Aplicación 3: Bioinformática */}
           <div className="application-item">
             <h4>Bioinformática</h4>
             <ul>
@@ -179,6 +208,7 @@ cC → cc`}
             </ul>
           </div>
           
+          {/* Aplicación 4: Verificación formal */}
           <div className="application-item">
             <h4>Verificación Formal</h4>
             <ul>
@@ -190,15 +220,18 @@ cC → cc`}
         </div>
       </section>
 
-      {/* SECCIÓN DE ESTRUCTURACIÓN DE FRASE */}
+      {/* SECCIÓN 6: Implementación - Estructuración de frases con GDC (NUEVA) */}
       <section id="estructuracion-frase" className="theory-section">
         <h2>6. Implementación: Estructuración de Frases con GDC</h2>
         
+        {/* Subsección 6.1: Arquitectura del sistema */}
         <div className="implementation-overview">
           <h3>6.1 Arquitectura del Sistema</h3>
           <p>Nuestro sistema implementa GDC mediante cuatro componentes principales:</p>
           
+          {/* Diagrama de arquitectura con 4 componentes */}
           <div className="architecture-diagram">
+            {/* Componente 1: Base léxica */}
             <div className="arch-component">
               <h4>Base Léxica (wordLists.js)</h4>
               <p>Contiene todas las palabras clasificadas con:</p>
@@ -210,6 +243,7 @@ cC → cc`}
               </ul>
             </div>
             
+            {/* Componente 2: Generador de fragmentos */}
             <div className="arch-component">
               <h4>Generador (generateFragment.js)</h4>
               <p>Responsable de:</p>
@@ -221,6 +255,7 @@ cC → cc`}
               </ul>
             </div>
             
+            {/* Componente 3: Reglas GDC */}
             <div className="arch-component">
               <h4>Reglas GDC (gdcRules.js)</h4>
               <p>Implementa las reglas contextuales:</p>
@@ -232,6 +267,7 @@ cC → cc`}
               </ul>
             </div>
             
+            {/* Componente 4: Validador */}
             <div className="arch-component">
               <h4>Validación (validateTokens.js)</h4>
               <p>Aplica todas las reglas GDC:</p>
@@ -245,9 +281,11 @@ cC → cc`}
           </div>
         </div>
 
+        {/* Subsección 6.2: Reglas GDC implementadas con detalle */}
         <div className="detailed-explanation">
           <h3>6.2 Reglas GDC Implementadas</h3>
           
+          {/* Regla 1: Concordancia artículo-sustantivo */}
           <div className="rule-detail">
             <h4>Regla 1: Concordancia Artículo-Sustantivo</h4>
             <div className="rule-code">
@@ -266,6 +304,7 @@ validate: (tokens) => {
             <p><strong>Ejemplo de aplicación:</strong> "La gato" → Error: artículo femenino con sustantivo masculino</p>
           </div>
           
+          {/* Regla 2: Apócope (transformación contextual especial) */}
           <div className="rule-detail">
             <h4>Regla 2: Apócope (Transformación Contextual Especial)</h4>
             <div className="rule-code">
@@ -291,6 +330,7 @@ function agreeAdjective(adj, género, plural, isPreNoun) {
             </ul>
           </div>
           
+          {/* Regla 3: Concordancia sujeto-verbo */}
           <div className="rule-detail">
             <h4>Regla 3: Concordancia Sujeto-Verbo</h4>
             <div className="rule-code">
@@ -311,6 +351,7 @@ validate: (tokens) => {
             pero la concordancia debe mantenerse a distancia.</p>
           </div>
           
+          {/* Regla 4: Restricciones semánticas */}
           <div className="rule-detail">
             <h4>Regla 4: Restricciones Semánticas</h4>
             <div className="rule-code">
@@ -336,9 +377,11 @@ validate: (tokens) => {
           </div>
         </div>
 
+        {/* Subsección 6.3: Proceso de generación de frases aleatorias */}
         <div className="generation-process">
           <h3>6.3 Proceso de Generación de Frases Aleatorias</h3>
           
+          {/* Paso 1: Selección de estructura */}
           <div className="process-step">
             <h4>Paso 1: Selección de Estructura</h4>
             <p>El sistema elige aleatoriamente una de las plantillas predefinidas:</p>
@@ -349,6 +392,7 @@ validate: (tokens) => {
             </ul>
           </div>
           
+          {/* Paso 2: Expansión de constituyentes */}
           <div className="process-step">
             <h4>Paso 2: Expansión de Constituyentes</h4>
             <p>Cada elemento de la plantilla se expande según reglas GDC:</p>
@@ -364,6 +408,7 @@ validate: (tokens) => {
             </div>
           </div>
           
+          {/* Paso 3: Aplicación de reglas contextuales */}
           <div className="process-step">
             <h4>Paso 3: Aplicación de Reglas Contextuales</h4>
             <p>Se aplican todas las reglas GDC en cascada:</p>
@@ -379,6 +424,7 @@ validate: (tokens) => {
             </div>
           </div>
           
+          {/* Paso 4: Validación final */}
           <div className="process-step">
             <h4>Paso 4: Validación Final</h4>
             <p>Antes de mostrar la frase, se valida con todas las reglas GDC:</p>
@@ -413,9 +459,11 @@ validate: (tokens) => {
           </div>
         </div>
 
+        {/* Subsección 6.4: Algoritmos clave implementados */}
         <div className="algorithms-used">
           <h3>6.4 Algoritmos Clave Implementados</h3>
           
+          {/* Algoritmo 1: Búsqueda en contexto */}
           <div className="algorithm">
             <h4>Algoritmo de Búsqueda en Contexto</h4>
             <p>Para verificar reglas donde el contexto puede estar a distancia:</p>
@@ -443,6 +491,7 @@ validate: (tokens) => {
             </div>
           </div>
           
+          {/* Algoritmo 2: Generación con retroceso */}
           <div className="algorithm">
             <h4>Algoritmo de Generación con Retroceso (Backtracking)</h4>
             <p>Para generar frases que cumplan todas las restricciones:</p>
@@ -479,9 +528,11 @@ validate: (tokens) => {
           </div>
         </div>
 
+        {/* Subsección 6.5: Análisis de complejidad */}
         <div className="complexity-analysis">
           <h3>6.5 Análisis de Complejidad</h3>
           
+          {/* Tabla de complejidades */}
           <table className="complexity-table">
             <thead>
               <tr>
@@ -521,10 +572,12 @@ validate: (tokens) => {
         </div>
       </section>
 
+      {/* Sección 7: Conclusión y aplicaciones futuras */}
       <section id="conclusion" className="theory-section">
         <h2>7. Conclusión y Aplicaciones Futuras</h2>
         
         <div className="conclusion-content">
+          {/* Subsección 7.1: Logros del sistema actual */}
           <h3>7.1 Logros del Sistema Actual</h3>
           <ul>
             <li>Implementación completa de 4 tipos de reglas GDC</li>
@@ -534,6 +587,7 @@ validate: (tokens) => {
             <li>Generación controlada por contexto</li>
           </ul>
           
+          {/* Subsección 7.2: Limitaciones actuales */}
           <h3>7.2 Limitaciones Actuales</h3>
           <ul>
             <li>Vocabulario limitado a la base léxica definida</li>
@@ -542,6 +596,7 @@ validate: (tokens) => {
             <li>Contexto limitado a ventanas pequeñas</li>
           </ul>
           
+          {/* Subsección 7.3: Extensiones futuras */}
           <h3>7.3 Extensiones Futuras</h3>
           <ul>
             <li><strong>Gramáticas de Unificación:</strong> Incorporar rasgos y restricciones más complejas</li>
@@ -551,6 +606,7 @@ validate: (tokens) => {
             <li><strong>Multilingüismo:</strong> Extender a otros idiomas con reglas GDC diferentes</li>
           </ul>
           
+          {/* Nota final sobre importancia teórica y práctica */}
           <div className="final-note">
             <h3>Importancia Teórica y Práctica</h3>
             <p>Este proyecto demuestra que las Gramáticas Dependientes del Contexto, aunque teóricamente complejas, 
@@ -561,6 +617,7 @@ validate: (tokens) => {
         </div>
       </section>
 
+      {/* Bibliografía de referencias teóricas */}
       <div className="bibliography">
         <h3>Referencias Teóricas</h3>
         <ul>

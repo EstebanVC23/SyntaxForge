@@ -1,17 +1,30 @@
+/* 
+  ESTILOS DE RETROALIMENTACIÓN VISUAL
+  Componentes para mostrar resultados de validación al usuario
+*/
+
+/* Mensaje de éxito - Validación correcta */
 .feedback-ok {
   margin-top: 12px;
   padding: 12px;
-  background: #d1fae5;
-  border: 2px solid #10b981;
+  background: #d1fae5;          /* Verde claro para éxito */
+  border: 2px solid #10b981;    /* Borde verde más oscuro */
   border-radius: 8px;
-  color: #065f46;
+  color: #065f46;               /* Texto verde oscuro para contraste */
 }
+
+/* Mensaje de error - Validación incorrecta */
 .feedback-error {
   margin-top: 12px;
   padding: 12px;
-  background: #fee2e2;
-  border: 2px solid #ef4444;
+  background: #fee2e2;          /* Rojo claro para error */
+  border: 2px solid #ef4444;    /* Borde rojo */
   border-radius: 8px;
-  color: #991b1b;
+  color: #991b1b;               /* Texto rojo oscuro para contraste */
 }
-.feedback-error ul { padding-left: 20px; margin: 8px 0 0; }
+
+/* Lista de errores dentro del mensaje de error */
+.feedback-error ul { 
+  padding-left: 20px;           /* Sangría para listas */
+  margin: 8px 0 0;              /* Espaciado solo arriba */
+}

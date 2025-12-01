@@ -231,15 +231,12 @@ Las contribuciones son bienvenidas. Por favor:
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
-## 👥 Autores
-
-- **Tu Nombre** - *Desarrollo inicial* - [GitHub](https://github.com/tu-usuario)
-
 ## 🙏 Agradecimientos
 
-- Teoría basada en los trabajos de Noam Chomsky
-- Inspirado en aplicaciones educativas de lingüística computacional
-- Implementación de GDC para español según principios de la RAE
+- Profesor Alexander Berjarano
+- Juan Sebastian Henao Becerra
+- Diego Alexander Aristizabal
+- Gabriela Ducuara Agudelo
 
 ## 📚 Referencias
 
