@@ -1,4 +1,3 @@
-// src/logic/utils/vocabularyValidator.js
 
 // Importa todas las listas de palabras desde el archivo de datos
 import { NOUNS, VERBS_CONJUGATIONS, ARTICLES, ADJECTIVES, ALLOWED_CONNECTORS, ALLOWED_PUNCTUATION } from "../../data/wordLists.js";

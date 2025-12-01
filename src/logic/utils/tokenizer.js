@@ -1,4 +1,4 @@
-// src/utils/tokenize.js
+
 /**
  * Tokenizador de oraciones en español.
  * 
