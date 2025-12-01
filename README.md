@@ -4,7 +4,7 @@ Un juego educativo interactivo para aprender sobre **Gramáticas Dependientes de
 
 ## 🌐 Demo en Vivo
 
-**[🚀 Jugar Ahora](https://gdc-game.vercel.app)**
+**[🚀 Jugar Ahora](https://syntaxforge23.netlify.app/)**
 
 ## 📋 Descripción
 
